@@ -47,9 +47,9 @@ In this section, we explain the different steps of processing we did on our raw 
 We did perform some basic processing as a first step : 
 \begin{itemize}
 \item Remove the variable \emph{fnlwgt}, as it is not an information on the individual.
-\item Remove the variable\emph{educationnum}, as it contains the same information as the variable \emph{education}.
+\item Remove the variable \emph{educationnum}, as it contains the same information as the variable \emph{education}.
 \item Transform the target variable into binary values,  0 if $<=50k\$$ 1 if $>50k\$$.
-\item Remove rows with missing values, indeed variables\emph{workclass}, \emph{occupation} and \emph{nativecountry} don't always have values. It represents 3620 rows.
+\item Remove rows with missing values, indeed variables \emph{workclass}, \emph{occupation} and \emph{nativecountry} don't always have values. It represents 3620 rows.
 \end{itemize}
 After these steps, the new dataset has 45222 rows. And 24.8\% of the observations are in the class 1 and 75.2\% are in the class 0.
 \subsection{Advanced processing :}
@@ -59,7 +59,7 @@ As the discrete variable \emph{nativecountry} contains 41 categories where the m
 
 \begin{tabular}{|c|c|}
 \hline
-New value & Old value concerned \\
+New value & Old values concerned \\
 \hline
 WEurope & England, France, Germany, Holand-Netherlands,\\
 & Ireland, Italy, Portugal, Scotland\\
