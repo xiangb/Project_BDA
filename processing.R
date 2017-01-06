@@ -34,3 +34,8 @@ dataset$target <- as.factor(dataset$target)
 #remove every row where there is a missing value, represented by '?' in the dataset
 dataset = dataset[(dataset$workclass!=' ?'&dataset$occupation!=' ?'&dataset$nativecountry!=' ?'),]
 
+# remove columns fnlwgt, capitalgain and capitalloss
+
+dataset$fnlwgt <- NULL
+dataset$capitalgain <- NULL
+dataset$capitalloss <- NULL
