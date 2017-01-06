@@ -22,19 +22,63 @@ For this project, we have decided to work on the dataset Adult from UCI. This is
 
 \section{Dataset description}
 The raw dataset has 48842 rows and 15 columns including the target variable. This data is originally from the american census bureau and shoulb be representative of the american population. This dataset is mixing continuous variables and discrete variables as follows : 
-\begin{center}
-\begin{description}\itemsep0.5pt
-\item[age] : continuous, age.
-\item[fnlwgt] : continuous, weights used to build the dataset, not useful for us.
-\item[workclass] : discrete, 8 categories representing the status of the company people work for ( Private, Federal-gov, Never-worket ...).
-\item[education] : discrete, 16 categories representing the education background (Bachelors, Masters, Doctorate, Highschool grad ... ).
-\item[education-num] : continuous, number of years of education.
-\item[marital-status] : discrete, 7 categories representing the marital status (Divorced, Never-married, Separated ... ).
-\item[occupation] : discrete, 14 categories representing the profession (Tech-support, Sales, Exec-managerial, Other-service ...).
 
+\begin{description}\itemsep0.5pt
+\item[age] : continuous, age of the individual.
+\item[fnlwgt] : continuous, the number of people the observation should represent, not useful for us.
+\item[workclass] : discrete, 8 categories representing the type of the employer of the individual ( Private, Federal-gov, Never-worked ...).
+\item[education] : discrete, 16 categories representing the highest level of education achieved by the individual (Bachelors, Masters, Doctorate, Highschool grad ... ).
+\item[educationnum] : continuous, number of years of education.
+\item[mstatus] : discrete, 7 categories representing the marital status of the individual(Divorced, Never-married, Separated ... ).
+\item[occupation] : discrete, 14 categories representing the occupation of the individual (Tech-support, Sales, Exec-managerial, Other-service ...).
+\item[relationship] : discrete, 6 categories representing the relationship of the individual, we don't know with who so this variable is not very clear (Wife, Husband,Own-child ...).
+\item[race] : discrete, 5 categories representing the race of the individual (White, Asian-Pac-Islander, Black, Amer-Indian-Eskimo and Other).
+\item[sex] : discrete, sex of the individual (Female or Male).
+\item[capitalgain] : continuous, represents the recorded capital gains.
+\item[capitalloss] : continuous, represents the recorded capital losses.
+\item[hoursperweek] : continuous, represents the number of hours worked per week.
+\item[nativecountry] : discrete, 41 categories representing the country of origin of the individual.
+\item[target] : discrete, variable to predict, 2 classes ($<= 50k\$$ or $>50k\$$).
 \end{description}
-\end{center}
+For the next sections, these names will be used to refer to the corresponding variable.
 \section{Data processing}
+In this section, we explain the different steps of processing we did on our raw dataset.
+\subsection{Basic processing : }
+We did perform some basic processing as a first step : 
+\begin{itemize}
+\item Remove the variable fnlwgt, as it is not an information on the individual.
+\item Remove the variable\emph{educationnum}, as it contains the same information as the variable \emph{education}.
+\item Transform the target variable into binary values,  0 if $<=50k\$$ 1 if $>50k\$$.
+\item Remove rows with missing values, indeed variables\emph{workclass}, \emph{occupation} and \emph{nativecountry} don't always have values. It represents 3620 rows.
+\end{itemize}
+After these steps, the new dataset has 45222 rows. And 24.8\% of the observations are in the class 1 and 75.2\% are in the class 0.
+\subsection{Advanced processing :}
+As the discrete variable \emph{nativecountry} contains 41 categories where the main one (United States) represents 91.3\% of the total, we have decided to group countries together into bigger categories. We don't change United-States, Canada, Japan, China, India , Iran and Mexico. The changes are the following :
+
+\begin{center}
+
+\begin{tabular}{|c|c|}
+\hline
+New value & Old value concerned \\
+\hline
+WEurope & England, France, Germany, Holand-Netherlands,\\
+& Ireland, Italy, Portugal, Scotland\\
+\hline
+EEurope & Greece, Hungary, South, Yugoslavia\\
+\hline
+SEAsia & Cambodia, Laos, Philippines, Thailand, Vietnam\\
+\hline
+ LatAmerica & Columbia, Cuba, Dominican-Republic, Ecuador, El-Salvador, \\
+&Guatemala, Haiti, Honduras, Jamaica, Nicaragua, \\
+&Outlying-US(Guam-USVI-etc), Peru, Puerto-Rico, Trinadad\&Tobago \\
+\hline
+China & HongKong, Taiwan \\
+\hline
+\end{tabular}
+\end{center}
+After the transformation, our \emph{nativecountry} variable has now 11 different values against 41 before. Of course, we lost some information but it shoud not be so significant as we regroup countries from same area and with similar economic situation.
+
+
 \section{Analysis}
 \section{Methodology and results}
 \section{Conclusion}
