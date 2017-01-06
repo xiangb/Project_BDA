@@ -37,5 +37,4 @@ dataset = dataset[(dataset$workclass!=' ?'&dataset$occupation!=' ?'&dataset$nati
 # remove columns fnlwgt, capitalgain and capitalloss
 
 dataset$fnlwgt <- NULL
-dataset$capitalgain <- NULL
-dataset$capitalloss <- NULL
+
