@@ -3,8 +3,8 @@
 ##############################################
 
 # Read data 
-dataset1 <- read.csv('Cours3A/MSc/BDA/Project january/data/adult.data',sep=',',header = F)
-dataset2 <- read.csv('Cours3A/MSc/BDA/Project january/data/adult.test',sep=',',header = F)
+dataset1 <- read.csv('data/adult.data',sep=',',header = F)
+dataset2 <- read.csv('data/adult.test',sep=',',header = F)
 
 #concat dataset1 and dataset2 without the first line (not used) of dataset2
 dataset <- rbind(dataset1,dataset2[-1,])
