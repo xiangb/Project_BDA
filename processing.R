@@ -84,3 +84,11 @@ dataset$race <- as.factor(dataset$race)
 dataset$sex <- as.factor(dataset$sex)
 dataset$nativecountry <- as.factor(dataset$nativecountry)
 
+# scale capitalgain capitalloss and hoursperweek
+
+dataset$capitalgain <- (dataset$capitalgain - mean(dataset$capitalgain))/sd(dataset$capitalgain)
+dataset$capitalloss <- (dataset$capitalloss - mean(dataset$capitalloss))/sd(dataset$capitalloss)
+dataset$hoursperweek <- (dataset$hoursperweek - mean(dataset$hoursperweek))/sd(dataset$hoursperweek)
+
+
+
