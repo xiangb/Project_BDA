@@ -103,9 +103,9 @@ library(caTools)
 ### Logistic regression ####
 ############################
 
-# repeat 20 times sampling process and save accuracy 
+# repeat 30 times sampling process and save accuracy 
 log_accuracy = c()
-for (i in c(1:20)){
+for (i in c(1:30)){
   
 spl <- sample.split(dataset$target, SplitRatio = 0.7)
 train <- subset(dataset, spl == TRUE)
@@ -116,8 +116,8 @@ logReg <- glm(target~ ., data = train, family = binomial)
 logReg_predict <- predict(logReg, newdata = test, type = "response")
 pred = ifelse(logReg_predict>0.5,1,0)
 conf_mat <- table(test$target, pred)
-
-log_accuracy <- c(log_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat))
+# save accuracy
+log_accuracy <- c(log_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat)) 
 
 }
 
