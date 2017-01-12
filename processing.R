@@ -13,10 +13,10 @@ rm(dataset1,dataset2)
 #columns names 
 colnames(dataset) <- c('age','workclass','fnlwgt','education','educationnum','mstatus','occupation','relationship','race','sex','capitalgain','capitalloss','hoursperweek','nativecountry','target')
 
-# remove columns fnlwgt
+# remove columns fnlwgt and education
 
 dataset$fnlwgt <- NULL
-dataset$educationnum <- NULL
+dataset$education <- NULL
 
 # transform target value to 0 if <=50K 1 if >50K
 dataset$target <- as.character(dataset$target)
@@ -89,6 +89,6 @@ dataset$nativecountry <- as.factor(dataset$nativecountry)
 dataset$capitalgain <- (dataset$capitalgain - mean(dataset$capitalgain))/sd(dataset$capitalgain)
 dataset$capitalloss <- (dataset$capitalloss - mean(dataset$capitalloss))/sd(dataset$capitalloss)
 dataset$hoursperweek <- (dataset$hoursperweek - mean(dataset$hoursperweek))/sd(dataset$hoursperweek)
-
+dataset$educationnum <- (dataset$educationnum-mean(dataset$educationnum))/sd(dataset$educationnum)
 
 

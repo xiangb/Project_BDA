@@ -13,7 +13,7 @@ rm(dataset1,dataset2)
 #columns names 
 colnames(dataset) <- c('age','workclass','fnlwgt','education','educationnum','mstatus','occupation','relationship','race','sex','capitalgain','capitalloss','hoursperweek','nativecountry','target')
 
-# remove columns fnlwgt
+# remove columns fnlwgt and educationnum
 
 dataset$fnlwgt <- NULL
 dataset$educationnum <- NULL
@@ -84,37 +84,48 @@ dataset$race <- as.factor(dataset$race)
 dataset$sex <- as.factor(dataset$sex)
 dataset$nativecountry <- as.factor(dataset$nativecountry)
 
-#models
+# scale capitalgain capitalloss and hoursperweek
+
+dataset$capitalgain <- (dataset$capitalgain - mean(dataset$capitalgain))/sd(dataset$capitalgain)
+dataset$capitalloss <- (dataset$capitalloss - mean(dataset$capitalloss))/sd(dataset$capitalloss)
+dataset$hoursperweek <- (dataset$hoursperweek - mean(dataset$hoursperweek))/sd(dataset$hoursperweek)
+
+
+
+##############################################
+#######       MODELS EVALUATION     ##########
+##############################################
 
 library(randomForest)
 library(caTools)
 
+############################
+### Logistic regression ####
+############################
 
-set.seed(2000)
-spl <- sample.split(dataset$target, SplitRatio = 0.6)
+# repeat 20 times sampling process and save accuracy 
+log_accuracy = c()
+for (i in c(1:20)){
+  
+spl <- sample.split(dataset$target, SplitRatio = 0.7)
 train <- subset(dataset, spl == TRUE)
 test <- subset(dataset, spl == FALSE)
 
 logReg <- glm(target~ ., data = train, family = binomial)
 
-
-summary(logReg)
-
 logReg_predict <- predict(logReg, newdata = test, type = "response")
-table(test$target, logReg_predict >= 0.5)
-Pred<- ifelse(logReg_predict>0.5,1,0)
+pred = ifelse(logReg_predict>0.5,1,0)
+conf_mat <- table(test$target, pred)
+
+log_accuracy <- c(log_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat))
+
+}
+
+###############################
+### END Logistic regression####
+###############################
 
 
-table(test$target)
-lracuracy<-confusionMatrix(Pred,test$target)$overall[1]
-lracuracy
-
-library(ROCR)
-
-ROCRpred <- prediction(logReg_predict, test$target)
-as.numeric(performance(ROCRpred, "auc")@y.values)
-perf <- performance(ROCRpred, "tpr", "fpr")
-plot(perf)
 
 #using CART
 
@@ -135,7 +146,6 @@ plot(perf)
 
 #using randomforest
 
-set.seed(1)
 library(randomForest)
 
 trainSmall <- train[sample(nrow(train), 2000),]
