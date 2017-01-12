@@ -3,9 +3,9 @@
 ##############################################
 
 # Read data 
-dataset1 <- read.csv('C:/Users/rauna/OneDrive/Documents/GitHub/Project_BDA/data/adult.data',sep=',',header = F)
-dataset2 <- read.csv('C:/Users/rauna/OneDrive/Documents/GitHub/Project_BDA/data/adult.test',sep=',',header = F)
-dataset1
+dataset1 <- read.csv('data/adult.data',sep=',',header = F)
+dataset2 <- read.csv('data/adult.test',sep=',',header = F)
+
 #concat dataset1 and dataset2 without the first line (not used) of dataset2
 dataset <- rbind(dataset1,dataset2[-1,])
 #remove dataset1 and dataset2
@@ -13,10 +13,10 @@ rm(dataset1,dataset2)
 #columns names 
 colnames(dataset) <- c('age','workclass','fnlwgt','education','educationnum','mstatus','occupation','relationship','race','sex','capitalgain','capitalloss','hoursperweek','nativecountry','target')
 
-# remove columns fnlwgt and educationnum
+# remove columns fnlwgt and education
 
 dataset$fnlwgt <- NULL
-dataset$educationnum <- NULL
+dataset$education <- NULL
 
 # transform target value to 0 if <=50K 1 if >50K
 dataset$target <- as.character(dataset$target)
@@ -76,7 +76,6 @@ dataset$nativecountry[dataset$nativecountry==" Yugoslavia"] = "EEurope"
 # format data
 dataset$age <- as.numeric(dataset$age)
 dataset$workclass <- as.factor(as.character(dataset$workclass)) # to avoid ? in levels
-dataset$education <- as.factor(dataset$education)
 dataset$mstatus <- as.factor(dataset$mstatus)
 dataset$occupation <- as.factor(as.character(dataset$occupation)) # to avoid ? in levels
 dataset$relationship <- as.factor(dataset$relationship)
@@ -89,6 +88,7 @@ dataset$nativecountry <- as.factor(dataset$nativecountry)
 dataset$capitalgain <- (dataset$capitalgain - mean(dataset$capitalgain))/sd(dataset$capitalgain)
 dataset$capitalloss <- (dataset$capitalloss - mean(dataset$capitalloss))/sd(dataset$capitalloss)
 dataset$hoursperweek <- (dataset$hoursperweek - mean(dataset$hoursperweek))/sd(dataset$hoursperweek)
+dataset$educationnum <- (dataset$educationnum-mean(dataset$educationnum))/sd(dataset$educationnum)
 
 
 

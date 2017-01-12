@@ -76,7 +76,6 @@ dataset$nativecountry[dataset$nativecountry==" Yugoslavia"] = "EEurope"
 # format data
 dataset$age <- as.numeric(dataset$age)
 dataset$workclass <- as.factor(as.character(dataset$workclass)) # to avoid ? in levels
-dataset$education <- as.factor(dataset$education)
 dataset$mstatus <- as.factor(dataset$mstatus)
 dataset$occupation <- as.factor(as.character(dataset$occupation)) # to avoid ? in levels
 dataset$relationship <- as.factor(dataset$relationship)
