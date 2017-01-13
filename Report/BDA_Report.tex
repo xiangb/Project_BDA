@@ -1,4 +1,4 @@
-\documentclass[12pt]{article} 
+\documentclass[11pt]{article} 
 \usepackage[utf8]{inputenc} 
 \usepackage{geometry} 
 \geometry{a4paper} 
@@ -82,7 +82,48 @@ After the transformation, our \emph{nativecountry} variable has now 11 different
 
 
 \section{Analysis}
-After the processing part, we can start to look at data and make some analysis by variable and with by class.
+After the processing part, we can start to look at data and make some analysis by variable and with by class. We separated the study whether the variables are nummeric or categorical.
+
+\subsection{Numerical features}
+We first study the correlation of numerical variables with the target. We thus made the following corrplot :
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.6\textwidth]{images/plot_corr.png}
+\end{figure}
+It shows that all the numerical variables are correlated positively with the target. However the correlation values remains low with the best score for (age, target) around 0.3. So for a first model, maybe it is not of paramount importance to include such variables.
+
+\subsection{Categorical features}
+We cannot define a correlation properly with categorical variables. We choose to look at the distribution of the target within the categorical variables and test their independance ($\chi$-squared test) with the target in order to have an idea of each possible contribution.
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+Feature & $\chi$-square & $p$-value \\
+\hline
+race & 452.3 & $<$2.2e-16\\
+workclass & 1207.3 & $<$2.2e-16\\
+mstatus & 9109.2 & $<$2.2e-16\\
+sex & 2104.1 & $<$2.2e-16\\
+nativecountry & 379.36 & $<$2.2e-16 \\
+education & 6000 & $<$2e-16
+\end{tabular}
+\end{center}
+
+The $\chi$-square test are very concluding so we are confident to reject the null hypothesis and consider that each of these categorical variables are non-independant with the target, it means that they are correlated. The very low p-values pinpoint also this high correlation. We should see some pattern by looking at the target distribution for each unique element of each feature.
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=.5\textwidth]{images/plot_race.png}%
+	\includegraphics[width=.5\textwidth]{images/plot_workclass.png}
+	\includegraphics[width=.5\textwidth]{images/plot_mstatus.png}%
+	\includegraphics[width=.5\textwidth]{images/plot_sex.png}
+	\includegraphics[width=.5\textwidth]{images/plot_nativecountry.png}%
+	\includegraphics[width=.5\textwidth]{images/plot_education.png}
+\end{figure}
+
+As we clearly see, for altmost all this categorical features, the distribution of the target is not homogenous within the feature labels. It should enable us to make better predictions with these features as a basis.
+
 \section{Methodology and results}
 \section{Conclusion}
 
