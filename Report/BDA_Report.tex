@@ -47,10 +47,10 @@ In this section, we explain the different steps of processing we did on our raw 
 We did perform some basic processing as a first step : 
 \begin{itemize}
 \item Remove the variable \emph{fnlwgt}, as it is not an information on the individual.
-\item Remove the variable \emph{education}, as it contains the same information as the variable \emph{educationnum} and we would prefer to work with a continuous variable.
+\item Remove the variable \emph{educationnum}, as it contains the same information as the variable \emph{education} and we would prefer to work with a discrete variable.
 \item Transform the target variable into binary values,  0 if $<=50k\$$ 1 if $>50k\$$.
 \item Remove rows with missing values, indeed variables \emph{workclass}, \emph{occupation} and \emph{nativecountry} don't always have values. It represents 3620 rows.
-\item Scale continuous variables : \emph{educationnum,capitalgain,capitalloss and hoursperweek}
+\item Scale continuous variables : \emph{capitalgain,capitalloss and hoursperweek}
 \end{itemize}
 After these steps, the new dataset has 45222 rows. And 24.8\% of the observations are in the class 1 and 75.2\% are in the class 0.
 \subsection{Advanced processing :}
@@ -82,7 +82,7 @@ After the transformation, our \emph{nativecountry} variable has now 11 different
 
 
 \section{Analysis}
-After the processing part, we can start to look at data and make some analysis by variable and with by class. We separated the study whether the variables are nummeric or categorical.
+After the processing part, we can start to look at data and make some analysis by variable and by class. We separated the study whether the variables are numeric or categorical.
 
 \subsection{Numerical features}
 We first study the correlation of numerical variables with the target. We thus made the following corrplot :
@@ -98,6 +98,7 @@ We cannot define a correlation properly with categorical variables. We choose to
 
 \begin{center}
 \begin{tabular}{|c|c|c|}
+\hline
 Feature & $\chi$-square & $p$-value \\
 \hline
 race & 452.3 & $<$2.2e-16\\
@@ -105,11 +106,12 @@ workclass & 1207.3 & $<$2.2e-16\\
 mstatus & 9109.2 & $<$2.2e-16\\
 sex & 2104.1 & $<$2.2e-16\\
 nativecountry & 379.36 & $<$2.2e-16 \\
-education & 6000 & $<$2e-16
+education & 6000 & $<$2e-16\\
+\hline
 \end{tabular}
 \end{center}
 
-The $\chi$-square test are very concluding so we are confident to reject the null hypothesis and consider that each of these categorical variables are non-independant with the target, it means that they are correlated. The very low p-values pinpoint also this high correlation. We should see some pattern by looking at the target distribution for each unique element of each feature.
+The $\chi$-square tests are very concluding so we are confident to reject the null hypothesis and consider that each of these categorical variables are non-independant with the target, it means that they are correlated. The very low p-values pinpoint also this high correlation. We should see some pattern by looking at the target distribution for each unique element of each feature.
 
 
 \begin{figure}[!h]
@@ -122,9 +124,84 @@ The $\chi$-square test are very concluding so we are confident to reject the nul
 	\includegraphics[width=.5\textwidth]{images/plot_education.png}
 \end{figure}
 
-As we clearly see, for altmost all this categorical features, the distribution of the target is not homogenous within the feature labels. It should enable us to make better predictions with these features as a basis.
-
+As we clearly see, for almost all this categorical features, the distribution of the target is not homogenous within the feature labels. It should enable us to make better predictions with these features as a basis. And some of the distributions are confirming some common knowledge. For example, in proportion more men (31\%) are in the $>50k\$$ category than women (11\%) or people with PhD (73\%) are more prone to be in the class 1 than people with master degree (53.4\%) or bachelor degree (42\%).
+We can see some other interesting insights too, for example, divorced people (10.4\%) are less prone to be in the class 1 than married people ($\approx$44\%). In terms of proportion, more Asian people (28\%) are earning more than 50k\$ than other minorities(12-13\%) and they even outreach white people. 
 \section{Methodology and results}
+\subsection{Methodology}
+In this section, we'll describe the procedure in order to compare different algorithms we have chosen on our dataset. These algorithms are Logistic Regression (LogReg), Bagging, Random Forest (RF) and K-Nearest Neighbours. 
+The difficulty here is that our dataset is mixing continuous and discrete variables. For the first three methods, it wasn't an issue as they deal easily with a mix of continuous and discrete variables. But for K-Nearest Neighbours, we had to transform the discrete variables before applying the model. We'll describe very precisely what we did for KNN and we'll see that the performances are surprisingly very good for KNN. 
+
+
+To compare the different algorithms, we perform the following procedure :
+
+\begin{enumerate}
+\item Find the best hyperparameters for our model by Cross Validation
+\item Split randomly dataset into train and test sets, 70\% in the train set and 30\% in
+test set.
+\item Train the algorithm on the train set
+\item Predict values on the test set
+\item Save the prediction error with accuracy measure
+\item Repeat 20 times steps 2 to 5
+\item Do steps 1 to 6 for each method (algorithm)
+
+\end{enumerate}
+\newpage
+\subsection{Results}
+\subsubsection{Logistic Regression, RF and Bagging}
+We'll not detail the hyperparameters selection for Random Forest and Bagging. Here are the results of Logistic Regression, optimized Random Forest and optimized Bagging : 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[scale=0.8]{images/accuracy_boxplot.png}
+
+\end{center}
+\caption{20 runs Accuracy boxplot for LogReg, RF and Bagging}
+\end{figure}
+
+Among these three methods, the best performing one is Random Forest with an average accuracy of \textbf{0.862}. Furthermore, we can notice that Logistic regression is very robust. The performances are very stable even though the train and test set are not the same.
+
+\subsubsection{K-Nearest Neighbours}
+
+As we said before, we can't directly apply KNN on our dataset. We need to transform our discrete variables into numeric variables, on which KNN will be able to build a metric. Besides, we can't just create a correspondence table. Indeed, if we choose to code the n values/categories of a discrete variable by a set of n integers, we'll introduce some order relationships. For instance, for the variable race, if we code 'White' by 1, 'Black' by 2 , 'Asian' by 3 and so on, we will have relationships like 'Black' $>$ ''White' or 'Asian' = 3*'White', which are not true here.  
+
+A common method to solve this problem is to transform discrete variables into dummy variables. That's what we did on our dataset, we transformed each discrete variable into dummy variables. At the end, we obtained 72 features excluding the target variable. The number of features is too big, we need to perform dimension reduction either because of the curse of dimensionality or because of the computational time. However, the screeplot (Fig. 2) of a PCA on our dataset did not give us something very remarkable so we decided to choose the number of features to keep by looking at the performances. 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[scale=0.6]{images/screeplot.png}
+
+\end{center}
+\caption{Screeplot for our dataset}
+\end{figure}
+\newpage
+Figure 3 presents the boxplot of a 3-NN for different number of kept features (after 5 runs): 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[scale=0.8]{images/KNN_PCA.png}
+
+\end{center}
+\caption{Accuracy boxplot for 3 NN and different number of principal components}
+\end{figure}
+
+So, we can see that if we project our data into a space of dimension 5 with PCA, the performances are astonishingly good ( average accuracy of even if the corresponding explained variance is around 20\%. Without doubt, we decide to keep the 5 first principal components in order to project our data. 
+\newpage
+So with this parameter fixed, figure 4 presents performances when we vary the parameter K of number of nearest neighbours. 
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.7]{images/Knn_accuracy.png}
+
+\end{center}
+\caption{Accuracy boxplot for varying number of Nearest Neighbours and 5 PC}
+\end{figure}
+
+
+
+So, performances are the best for K=3. We have an average accuracy of \textbf{0.996}. This method outperformed Logistic Regression, Random Forest and Bagging.  But the problem is that we can't really explain which features were valuable as we performed PCA on our dataset.
+
+
+
 \section{Conclusion}
 
 

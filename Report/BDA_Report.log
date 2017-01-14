@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.26)  12 JAN 2017 14:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.26)  14 JAN 2017 19:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 5 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -427,12 +427,12 @@ LaTeX Font Info:    ... okay on input line 15.
 * \topmargin=-7.86334pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=44.0pt
+* \marginparwidth=59.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -500,17 +500,15 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 16.
+(Font)              <12> on input line 16.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 16.
+(Font)              <8> on input line 16.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 16.
 
 (./BDA_Report.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 4.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 4.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 4.
+(Font)              <10.95> on input line 4.
 )
 \tf@toc=\write3
 \openout3 = `BDA_Report.toc'.
@@ -518,44 +516,134 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (10.43448pt too wide) in paragraph at lines 32--33
+[]\OT1/cmr/m/n/10.95 : dis-crete, 7 cat-e-gories rep-re-sent-ing the mar-i-tal 
+sta-tus of the in-di-vid-ual(Divorced,
+ []
+
 [2]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 49.
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 49.
+ [3]
+<images/plot_corr.png, id=21, 441.90094pt x 288.3272pt>
+File: images/plot_corr.png Graphic file (type png)
 
-Overfull \hbox (9.77057pt too wide) in paragraph at lines 53--54
-[]\OT1/cmr/m/n/12 Scale con-tin-u-ous vari-ables : \OT1/cmr/m/it/12 ed-u-ca-tio
-n-num,capitalgain,capitalloss,hoursperweek 
- []
+<use images/plot_corr.png>
+Package pdftex.def Info: images/plot_corr.png used on input line 92.
+(pdftex.def)             Requested size: 250.95476pt x 163.74106pt.
+ [4 <./images/plot_corr.png (PNG copy)>]
+<images/plot_race.png, id=25, 1324.95pt x 752.8125pt>
+File: images/plot_race.png Graphic file (type png)
 
+<use images/plot_race.png>
+Package pdftex.def Info: images/plot_race.png used on input line 119.
+(pdftex.def)             Requested size: 209.12683pt x 118.8213pt.
 
-Overfull \hbox (23.24481pt too wide) in paragraph at lines 61--79
+<images/plot_workclass.png, id=26, 1324.95pt x 752.8125pt>
+File: images/plot_workclass.png Graphic file (type png)
+
+<use images/plot_workclass.png>
+Package pdftex.def Info: images/plot_workclass.png used on input line 120.
+(pdftex.def)             Requested size: 209.12683pt x 118.8213pt.
+
+<images/plot_mstatus.png, id=27, 1054.339pt x 574.948pt>
+File: images/plot_mstatus.png Graphic file (type png)
+
+<use images/plot_mstatus.png>
+Package pdftex.def Info: images/plot_mstatus.png used on input line 121.
+(pdftex.def)             Requested size: 209.12683pt x 114.04007pt.
+
+<images/plot_sex.png, id=29, 1324.95pt x 752.8125pt>
+File: images/plot_sex.png Graphic file (type png)
+ <use images/plot_sex.png>
+Package pdftex.def Info: images/plot_sex.png used on input line 122.
+(pdftex.def)             Requested size: 209.12683pt x 118.8213pt.
+
+<images/plot_nativecountry.png, id=30, 1324.95pt x 752.8125pt>
+File: images/plot_nativecountry.png Graphic file (type png)
+
+<use images/plot_nativecountry.png>
+Package pdftex.def Info: images/plot_nativecountry.png used on input line 123.
+(pdftex.def)             Requested size: 209.12683pt x 118.8213pt.
+
+<images/plot_education.png, id=31, 1054.339pt x 597.432pt>
+File: images/plot_education.png Graphic file (type png)
+
+<use images/plot_education.png>
+Package pdftex.def Info: images/plot_education.png used on input line 124.
+(pdftex.def)             Requested size: 209.12683pt x 118.49974pt.
+ [5 <./images/plot_race.png> <./images/plot_workclass.png> <./images/plot_mstat
+us.png> <./images/plot_sex.png> <./images/plot_nativecountry.png> <./images/plo
+t_education.png>] [6]
+<images/accuracy_boxplot.png, id=40, 526.96875pt x 376.40625pt>
+File: images/accuracy_boxplot.png Graphic file (type png)
+
+<use images/accuracy_boxplot.png>
+Package pdftex.def Info: images/accuracy_boxplot.png used on input line 155.
+(pdftex.def)             Requested size: 421.57556pt x 301.1254pt.
+
+Overfull \hbox (3.32188pt too wide) in paragraph at lines 155--156
  [] 
  []
 
-[3] [4] (./BDA_Report.aux) ) 
+[7 <./images/accuracy_boxplot.png>]
+<images/screeplot.png, id=46, 770.077pt x 561.297pt>
+File: images/screeplot.png Graphic file (type png)
+
+<use images/screeplot.png>
+Package pdftex.def Info: images/screeplot.png used on input line 171.
+(pdftex.def)             Requested size: 462.04976pt x 336.78079pt.
+
+Overfull \hbox (43.79608pt too wide) in paragraph at lines 171--172
+ [] 
+ []
+
+[8 <./images/screeplot.png>]
+<images/KNN_PCA.png, id=51, 564.60938pt x 376.40625pt>
+File: images/KNN_PCA.png Graphic file (type png)
+
+<use images/KNN_PCA.png>
+Package pdftex.def Info: images/KNN_PCA.png used on input line 181.
+(pdftex.def)             Requested size: 451.68811pt x 301.1254pt.
+
+Overfull \hbox (33.43443pt too wide) in paragraph at lines 181--182
+ [] 
+ []
+
+[9 <./images/KNN_PCA.png>]
+<images/Knn_accuracy.png, id=56, 564.60938pt x 376.40625pt>
+File: images/Knn_accuracy.png Graphic file (type png)
+
+<use images/Knn_accuracy.png>
+Package pdftex.def Info: images/Knn_accuracy.png used on input line 193.
+(pdftex.def)             Requested size: 395.22386pt x 263.48257pt.
+ [10 <./images/Knn_accuracy.png>]
+(./BDA_Report.aux) ) 
 Here is how much of TeX's memory you used:
- 2284 strings out of 494924
- 31013 string characters out of 6179707
- 95307 words of memory out of 5000000
- 5559 multiletter control sequences out of 15000+600000
- 9155 words of font info for 32 fonts, out of 8000000 for 9000
+ 2342 strings out of 494924
+ 32408 string characters out of 6179707
+ 95303 words of memory out of 5000000
+ 5603 multiletter control sequences out of 15000+600000
+ 9157 words of font info for 32 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,6n,23p,588b,189s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on BDA_Report.pdf (4 pages, 87515 bytes).
+ 37i,7n,23p,617b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb
+x12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on BDA_Report.pdf (10 pages, 385230 bytes).
 PDF statistics:
- 45 PDF objects out of 1000 (max. 8388607)
- 31 compressed objects within 1 object stream
+ 91 PDF objects out of 1000 (max. 8388607)
+ 52 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
