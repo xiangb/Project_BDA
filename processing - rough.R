@@ -3,9 +3,9 @@
 ##############################################
 
 # Read data 
-dataset1 <- read.csv('data/adult.data',sep=',',header = F)
-dataset2 <- read.csv('data/adult.test',sep=',',header = F)
-
+dataset1 <- read.csv('C:/Users/rauna/OneDrive/Documents/GitHub/Project_BDA/data/adult.data',sep=',',header = F)
+dataset2 <- read.csv('C:/Users/rauna/OneDrive/Documents/GitHub/Project_BDA/data/adult.test',sep=',',header = F)
+dataset1
 #concat dataset1 and dataset2 without the first line (not used) of dataset2
 dataset <- rbind(dataset1,dataset2[-1,])
 #remove dataset1 and dataset2
@@ -13,10 +13,10 @@ rm(dataset1,dataset2)
 #columns names 
 colnames(dataset) <- c('age','workclass','fnlwgt','education','educationnum','mstatus','occupation','relationship','race','sex','capitalgain','capitalloss','hoursperweek','nativecountry','target')
 
-# remove columns fnlwgt and education
+# remove columns fnlwgt
 
 dataset$fnlwgt <- NULL
-dataset$education <- NULL
+dataset$educationnum <- NULL
 
 # transform target value to 0 if <=50K 1 if >50K
 dataset$target <- as.character(dataset$target)
@@ -76,6 +76,7 @@ dataset$nativecountry[dataset$nativecountry==" Yugoslavia"] = "EEurope"
 # format data
 dataset$age <- as.numeric(dataset$age)
 dataset$workclass <- as.factor(as.character(dataset$workclass)) # to avoid ? in levels
+dataset$education <- as.factor(dataset$education)
 dataset$mstatus <- as.factor(dataset$mstatus)
 dataset$occupation <- as.factor(as.character(dataset$occupation)) # to avoid ? in levels
 dataset$relationship <- as.factor(dataset$relationship)
@@ -83,47 +84,169 @@ dataset$race <- as.factor(dataset$race)
 dataset$sex <- as.factor(dataset$sex)
 dataset$nativecountry <- as.factor(dataset$nativecountry)
 
-# scale capitalgain capitalloss and hoursperweek
-
-dataset$capitalgain <- (dataset$capitalgain - mean(dataset$capitalgain))/sd(dataset$capitalgain)
-dataset$capitalloss <- (dataset$capitalloss - mean(dataset$capitalloss))/sd(dataset$capitalloss)
-dataset$hoursperweek <- (dataset$hoursperweek - mean(dataset$hoursperweek))/sd(dataset$hoursperweek)
-dataset$educationnum <- (dataset$educationnum-mean(dataset$educationnum))/sd(dataset$educationnum)
-
-
-
-##############################################
-#######       MODELS EVALUATION     ##########
-##############################################
+#models
 
 library(randomForest)
 library(caTools)
 
-############################
-### Logistic regression ####
-############################
+#logistic
 
-# repeat 30 times sampling process and save accuracy 
 log_accuracy = c()
 for (i in c(1:30)){
   
-spl <- sample.split(dataset$target, SplitRatio = 0.7)
-train <- subset(dataset, spl == TRUE)
-test <- subset(dataset, spl == FALSE)
+  spl <- sample.split(dataset$target, SplitRatio = 0.7)
+  train <- subset(dataset, spl == TRUE)
+  test <- subset(dataset, spl == FALSE)
+  
+  logReg <- glm(target~ ., data = train, family = binomial)
+  
+  logReg_predict <- predict(logReg, newdata = test, type = "response")
+  pred = ifelse(logReg_predict>0.5,1,0)
+  conf_mat <- table(test$target, pred)
+  # save accuracy
+  log_accuracy <- c(log_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat)) 
+  
+}
+log_accuracy
+a<-mean(log_accuracy)
+a
+warnings()
 
-logReg <- glm(target~ ., data = train, family = binomial)
 
-logReg_predict <- predict(logReg, newdata = test, type = "response")
-pred = ifelse(logReg_predict>0.5,1,0)
-conf_mat <- table(test$target, pred)
-# save accuracy
-log_accuracy <- c(log_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat)) 
+#using randomforest
 
+set.seed(1)
+library(randomForest)
+
+rf_accuracy = c()
+for (i in c(1:30)){
+  
+  spl <- sample.split(dataset$target, SplitRatio = 0.7)
+  train <- subset(dataset, spl == TRUE)
+  test <- subset(dataset, spl == FALSE)
+  
+  RFmodel <- randomForest(target~ ., data = train,ntree = 500, maxnodes = 10)
+  
+  RFmodel_predict<- predict(RFmodel, newdata = test, type = "response")
+  
+  conf_mat <- table(test$target, RFmodel_predict)
+  # save accuracy
+  rf_accuracy <- c(rf_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat)) 
+  
+}
+rf_accuracy
+b<-mean(rf_accuracy)
+b
+
+#using KNN
+"the dataincome ks in numeric form and has been used for knn,lda and step function"
+library(class)
+colnames(dataset)
+
+dataincome=dataset
+
+str(dataincome)
+dataincome$workclass=as.numeric(dataincome$workclass)
+dataincome$education=as.numeric(dataincome$education)
+dataincome$mstatus=as.numeric(dataincome$mstatus)
+dataincome$occupation=as.numeric(dataincome$occupation)
+dataincome$relationship=as.numeric(dataincome$relationship)
+dataincome$race=as.numeric(dataincome$race)
+dataincome$sex=as.numeric(dataincome$sex)
+dataincome$nativecountry=as.numeric(dataincome$nativecountry)
+dataincome$target=as.numeric(dataincome$target)
+
+
+spl <- sample.split(dataincome$target, SplitRatio = 0.7)
+train1<- subset(dataincome, spl == TRUE)
+
+test1<-subset(dataincome, spl == FALSE)
+
+
+knn_accuracy = c()
+for (i in c(1:30)){
+  
+  spl <- sample.split(dataincome$target, SplitRatio = 0.7)
+  train <- subset(dataincome, spl == TRUE)
+  test <- subset(dataincome, spl == FALSE)
+  
+  knnmodel <- knn(train=train,test=test,cl=train[,13],k=10)
+  
+  #knn_predict <- predict(knnmodel, newdata = test)
+ 
+  conf_mat <- table(test$target,knnmodel)
+  # save accuracy
+  knn_accuracy <- c(knn_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat)) 
+  
 }
 
-###############################
-### END Logistic regression####
-###############################
+knn_accuracy
+c<-mean(knn_accuracy)
+c
+# k=10: 0.8816551 , k=15 : 0.8784633 ,k=20: 0.8749201 ,k=5: 0.8872893
+
+#lda 
+
+library(MASS)
+library(caret)
+library(ISLR)
+
+tmp <- cor(dataincome)
+tmp[upper.tri(tmp)] <- 0
+diag(tmp) <- 0
+dataincome1<-dataincome[,!apply(tmp,2,function(x) any(x > 0.99))]
+library(class) 
+lda_accuracy = c()
+for (i in c(1:30)){
+spl <- sample.split(dataincome1$target, SplitRatio = 0.7)
+train <- subset(dataincome1, spl == TRUE)
+test <- subset(dataincome1, spl == FALSE)
+
+lda.fit <- lda(target~., data=train)
+lda.fit
+lda.pred <- predict(lda.fit, test)
+names(lda.pred)
+
+conf_mat <- table(lda.pred$class, test$target)
+# save accuracy
+lda_accuracy <- c(lda_accuracy,(conf_mat[1,1]+conf_mat[2,2])/sum(conf_mat)) 
+}
+
+lda_accuracy
+d<-mean(lda_accuracy)
+d
+#lda_accuracy=0.7804683
+
+#step function
+datastep=dataincome
+colnames(datastep)
+library(leaps)
+leaps=regsubsets(target~age+workclass+education+mstatus+occupation+relationship+race+sex+capitalgain+capitalloss+hoursperweek+nativecountry,
+                   data=datastep, nbest=10,really.big=T)
+plot(leaps, scale="adjr2")
+plot(leaps, scale="bic")
+
+
+null=lm(target~1, data=datastep)
+null
+
+full=lm(target~., data=datastep)
+full
+
+step(null, scope=list(lower=null, upper=full), direction="forward")
+
+# gave: Call:
+"lm(formula = target ~ relationship + capitalgain + age + hoursperweek + 
+     capitalloss + mstatus + sex + education + occupation + race + 
+     workclass, data = datastep)
+just try running once more, as per step, nativecountry is useless."
+#
+
+
+
+
+
+
 
 
 
@@ -143,50 +266,6 @@ cartacuracy
 as.numeric(performance(ROCRpred, "auc")@y.values)
 perf <- performance(ROCRpred, "tpr", "fpr")
 plot(perf)
-
-#using randomforest
-
-library(randomForest)
-
-trainSmall <- train[sample(nrow(train), 2000),]
-set.seed(1)
-RFmodel <- randomForest(target ~., data = trainSmall)
-
-RFmodel_predict <- predict(RFmodel, newdata = test)
-table(test$target, RFmodel_predict)
-rfacuracy<-confusionMatrix(RFmodel_predict,test$target)$overall[1]
-rfacuracy
-
-
-#using caret
-library(caret)
-
-library(e1071)
-numFolds <- trainControl(method = "cv", number = 10 )
-cartGrid <- expand.grid(.cp = seq(0.002, 0.1, 0.002))
-train(target ~., data = train, method = "rpart",trControl = numFolds, tuneGrid = cartGrid)
-
-CARTmodel_final <- rpart(target ~ ., data = train, method = "class",cp=0.002)
-prediction <- predict(CARTmodel_final, newdata = test, type = "class")
-table(test$target, prediction)
-
-ROCRpred <- prediction(as.numeric(prediction),test$target)
-cacuracy<-confusionMatrix(prediction,test$target)$overall[1]
-cacuracy
-
-as.numeric(performance(ROCRpred, "auc")@y.values)
-perf <- performance(ROCRpred, "tpr", "fpr")
-plot(perf)
-prp(CARTmodel_final)
-
-## Decision Tree
-
-treeFit<- rpart(target~.,data=train,method = 'class')
-print(treeFit)
-rpart.plot(treeFit, box.col=c("yellow", "green"))
-dtprediction<- predict(treeFit,newdata=test[-13],type = 'class')
-dtacu<-confusionMatrix(dtprediction,test$target)$overall[1]
-dtacu
 
 
 
