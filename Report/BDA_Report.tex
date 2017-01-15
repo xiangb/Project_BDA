@@ -147,18 +147,18 @@ test set.
 \end{enumerate}
 \newpage
 \subsection{Results}
-\subsubsection{Logistic Regression, RF and Bagging}
-We'll not detail the hyperparameters selection for Random Forest and Bagging. Here are the results of Logistic Regression, optimized Random Forest and optimized Bagging : 
+\subsubsection{Logistic Regression, RF and Tree Bagging}
+We'll not detail the hyperparameters selection for Random Forest and Tree Bagging. Here are the results of Logistic Regression, optimized Random Forest and optimized Tree Bagging : 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[scale=0.8]{images/accuracy_boxplot.png}
 
 \end{center}
-\caption{20 runs Accuracy boxplot for LogReg, RF and Bagging}
+\caption{20 runs Accuracy boxplot for LogReg, RF and Tree Bagging}
 \end{figure}
 
-Among these three methods, the best performing one is Random Forest with an average accuracy of \textbf{0.862}. Furthermore, we can notice that Logistic regression is very robust. The performances are very stable even though the train and test set are not the same.
+Among these three methods, the best performing one is Random Forest with an average accuracy of \textbf{0.862}. Furthermore, we can notice that Logistic regression is very robust. The performances are very stable even though the train and test set are not the same. We already knew that tree bagging will perform worse since RF are an enhancement of this very method.
 
 \subsubsection{K-Nearest Neighbours}
 
@@ -184,7 +184,7 @@ Figure 3 presents the boxplot of a 3-NN for different number of kept features (a
 \caption{Accuracy boxplot for 3 NN and different number of principal components}
 \end{figure}
 
-So, we can see that if we project our data into a space of dimension 5 with PCA, the performances are astonishingly good ( average accuracy of even if the corresponding explained variance is around 20\%. Without doubt, we decide to keep the 5 first principal components in order to project our data. 
+So, we can see that if we project our data into a space of dimension 5 with PCA, the performances are astonishingly good ( average accuracy of even if the corresponding explained variance is around 20\%. This could be explain that given the fact that the categorical variables are highly correlated to the target, it is unnecessary to complexify the models with a lot of variables (otherwise themodels could be subject to the curse of dimensionality). Without doubt, we decide to keep the 5 first principal components in order to project our data. 
 \newpage
 So with this parameter fixed, figure 4 presents performances when we vary the parameter K of number of nearest neighbours. 
 
@@ -203,6 +203,9 @@ So, performances are the best for K=3. We have an average accuracy of \textbf{0.
 
 
 \section{Conclusion}
+
+The results we obtained were surprisingly good. Given the particularities of the dataset, namely the intrication of numerical and categorical variables, it required quite a lot of processing and manual adjustment to get to these results. This kind of study highlights perfectly the role of the data scientist for a real-world dataset that demands more than a "click-and-go" algorithm. 
+In particular, we processed the data to make it understandable for the different methods (cleansing, formatting, dummy variables etc..), we then performed a data analysis to make sure to take into accoount in our models the features that could explain the target. It allows us to justify the choice of "common sense" explanations. We then train and test several methods on different parts of the data to make sure the models are not overfitting. This methodoly allows to get outstanding results on this particular dataset. Of course the relative small size of the dataset made this tractable for our computational power. However this methodology, involving dimensionality reduction, is scalable to larger dataset.
 
 
 
